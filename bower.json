@@ -1,0 +1,23 @@
+{
+  "name": "html5-weatherapp-delta",
+  "version": "0.0.0",
+  "authors": [
+    "Jollen Chen <jollen@moko365.com>"
+  ],
+  "main": "index.html",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "vendor",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.4",
+    "backbone": "~1.2.1",
+    "underscore": "~1.8.3",
+    "bootstrap": "~3.3.5"
+  }
+}
