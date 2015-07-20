@@ -14,6 +14,9 @@ app.Message = Backbone.Model.extend({
     main: {
         temp: -1,
         humidity: -1
+    },
+    wind: {
+        speed: -1
     }
   }
 });
@@ -35,10 +38,23 @@ app.MessageView = Backbone.View.extend({
         //this.render();
     },
     render: function() {
+        // Celsius
+        var temp = this.model.get('main').temp;
+        var celsius = parseInt(temp - 273.15);
+        this.model.set('celsius', celsius);
+
+        // Date
+        var date = moment().format('LL');
+        this.model.set('date', date);
+        
         var html = this.template(this.model.attributes);
         this.$el.html(html);
 
-        $('.title').updateTitle();
+        // Wind Scale
+        var wind = this.model.get('wind').speed;
+        var target = this.$el.find('.wi-icon');
+
+        target.addClass('wi-beafort-' + wind);
     },
 });
 
