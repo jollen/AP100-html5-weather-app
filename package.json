@@ -1,0 +1,35 @@
+{
+  "name": "html5-weather-app",
+  "version": "1.0.0",
+  "description": "A simple weather web app.",
+  "main": "main.js",
+  "dependencies": {
+    "backbone": "^1.3.3",
+    "browser-sync": "^2.18.12",
+    "gulp": "^3.9.1",
+    "gulp-browserify": "^0.5.1",
+    "gulp-cordova-build-android": "^1.5.1",
+    "gulp-cordova-create": "^1.3.1",
+    "gulp-cordova-plugin": "^2.0.0",
+    "gulp-load-plugins": "^1.5.0",
+    "jquery": "^3.2.1",
+    "moment": "^2.18.1",
+    "run-sequence": "^2.0.0",
+    "superagent": "^3.5.2",
+    "underscore": "^1.8.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jollen/AP100-html5-weather-app.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jollen/AP100-html5-weather-app/issues"
+  },
+  "homepage": "https://github.com/jollen/AP100-html5-weather-app#readme"
+}
