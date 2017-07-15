@@ -1,88 +1,36 @@
-var Backbone = require('backbone');
+var W3CWebSocket = require('websocket').w3cwebsocket;
 var $ = require('jquery');
-var _ = require('underscore');
-var moment = require('moment');
 
-/**
-* SETUP
-**/
-var app = app || {};
+$.fn.viewer = function(name) {
+    var self = this;
+    var viewer = new W3CWebSocket('ws://192.168.1.100:5000/object/' + name + '/viewer', '');
 
-/**
-* MODELS
-**/
-app.Message = Backbone.Model.extend({  
-  url: function() {
-    return 'http://api.openweathermap.org/data/2.5/weather?q=' + this.city + '&APPID=2ab10d1d7c261f5cb373916cc1cf107f';
-  },
-  city: '',
-  defaults: {
-    main: {
-        temp: -1,
-        humidity: -1
-    },
-    wind: {
-        speed: -1
-    },
-    name: ''
-  }
-});
+    viewer.onopen = function() {
+        console.log('WebSocket View Client Connected');        
+    };
 
-/**
-* VIEWS
-**/
-app.MessageView = Backbone.View.extend({
-    el: '#app',
-    events: {
-    },
-    // constructor
-    initialize: function() {
-        this.model = new app.Message();
-        this.template = _.template($('#weather-tmpl').html());
+    viewer.onmessage = function(e) {
+        self.html(name + ': ' + e.data);
+    };
+};
 
-        this.model.bind('change', this.render, this);
-        this.model.city = this.$el.data('city');
-
-        this.model.fetch();
-        //this.render();
-    },
-    render: function() {
-        // Celsius
-        var temp = this.model.get('main').temp;
-        var celsius = parseInt(temp - 273.15);
-        this.model.set('celsius', celsius);
-
-        // Date
-        var date = moment().format('LL');
-        this.model.set('date', date);
-        
-        var html = this.template(this.model.attributes);
-        this.$el.html(html);
-
-        // Wind Scale
-        var wind = this.model.get('wind').speed;
-        var target = this.$el.find('.wi-icon');
-
-        target.addClass('wi-beafort-' + wind);
-    },
-    reload: function(city) {
-        this.model.city = city;
-        this.model.fetch();
-    }
-});
-
-/**
-* BOOTUP
-**/
 $(document).ready(function() {
-    app.messageView = new app.MessageView();
-
-    $('.btn').each(function() {
-        var self = $(this);
-        self.click(function() {
-            var city = self.html();
-            app.messageView.reload(city);
-            console.log('Switching to ' + city);
-        });
+    $('.message').each(function() {
+        var name = $(this).data('name');
+        $(this).viewer(name);
     });
+
+    var client = new W3CWebSocket('ws://192.168.1.100:5000/object/jollen/send', '');
+     
+    client.onopen = function() {
+        console.log('WebSocket Send Client Connected');
+     
+        function sendNumber() {
+            var number = Math.round(Math.random() * 0xFFFFFF);
+            client.send(number.toString());
+            console.log('Sending... ' + number.toString());
+            setTimeout(sendNumber, 3000);
+        }
+        sendNumber();
+    };
 });
