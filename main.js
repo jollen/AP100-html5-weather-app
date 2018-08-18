@@ -9,7 +9,8 @@ var app = app || {};
 * MODELS
 **/
 app.Message = Backbone.Model.extend({  
-  url: 'http://api.openweathermap.org/data/2.5/weather?q=Suzhou',
+  url: 'http://api.openweathermap.org/data/2.5/weather?q=Suzhou&APPID=2ab10d1d7c261f5cb373916cc1cf107f
+',
   defaults: {
     main: {
         temp: -1,
